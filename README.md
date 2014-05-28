@@ -13,4 +13,3 @@ See first article and live example at [Ember.js Hello World](http://www.railsonm
 To create some sample data:
 
     rake db:populate
-
