@@ -1,9 +1,9 @@
 <script type="text/x-handlebars">
   <div class="navbar">
     <div class="navbar-inner">
-      <a class="brand" href="#">Bloggr</a>
+      <a class="brand" href="#">Demo</a>
       <ul class="nav">
-        <li>{{#linkTo 'posts'}}Posts{{/linkTo}}</li>
+        <li>{{#linkTo 'sites'}}Sites{{/linkTo}}</li>
         <li>{{#linkTo 'about'}}About{{/linkTo}}</li>
       </ul>
 
@@ -14,28 +14,29 @@
 
 <script type="text/x-handlebars" id="about">
   <div class='about'>
+    <p>Jebbit Demo Site App</p>
     <p>Justin Gordon wrote this: http://www.railsonmaui.com</p>
     <p>Git Repository: </p>
   </div>
 </script>
 
-<script type="text/x-handlebars" id="posts">
+<script type="text/x-handlebars" id="sites">
   <div class='container-fluid'>
     <div class='row-fluid'>
       <div class='span3'>
         <table class='table'>
           <thead>
           <tr>
-            <th>Recent Posts
-              {{#linkTo "posts.new" class="btn"}}Add Post{{/linkTo}}
+            <th>Recent Sites
+              {{#linkTo "sites.new" class="btn"}}Add Site{{/linkTo}}
             </th>
           </tr>
           </thead>
-          {{#each post in filteredContent}}
+          {{#each site in filteredContent}}
           <tr>
             <td>
-              {{#linkTo post post}}{{post.title}}
-              <small class='muted'>by {{post.author}}</small>
+              {{#linkTo site site}}{{site.name}}
+              <small class='muted'>by {{site.author}}</small>
               {{/linkTo}}
             </td>
           </tr>
@@ -48,43 +49,43 @@
     </div>
   </div>
 </script>
-<script type="text/x-handlebars" id="posts/index">
-  <p class="text-warning">Please select a post</p>
+<script type="text/x-handlebars" id="sites/index">
+  <p class="text-warning">Please select a site</p>
 </script>
 
-<script type="text/x-handlebars" id="posts/new">
-  <legend>Create Post</legend>
-  {{partial 'post/edit'}}
+<script type="text/x-handlebars" id="sites/new">
+  <legend>Create Site</legend>
+  {{partial 'site/edit'}}
   <button {{action 'save'}} class='btn'>Create</button>
   <button {{action cancel}} class='btn'>Cancel</button>
-  {{partial 'post/view'}}
+  {{partial 'site/view'}}
 </script>
 
-<script type="text/x-handlebars" id="post">
+<script type="text/x-handlebars" id="site">
   {{#if isEditing}}
-  {{partial 'post/edit'}}
+  {{partial 'site/edit'}}
   <button {{action 'doneEditing'}} class='btn'>Done</button>
   {{else}}
   <button {{action 'edit'}} class='btn'>Edit</button>
   <button {{action 'delete'}} class='btn'>Delete</button>
   {{/if}}
-  {{partial 'post/view'}}
+  {{partial 'site/view'}}
 </script>
 
-<script type="text/x-handlebars" id="post/_view">
-  <h1>{{title}}</h1>
-  <h4>by {{author}} <small class="muted">({{date publishedAt}})</small></h4>
+<script type="text/x-handlebars" id="site/_view">
+  <h1>{{name}}</h1>
+  <h4>by {{author}} <small class="muted">({{date createdAt}})</small></h4>
   <hr>
   <div class="intro">
-    {{markdown intro}}
+    {{markdown img_url}}
   </div>
   <div class="below-the-fold">
-    {{markdown extended}}
+    {{markdown landing_url}}
   </div>
 </script>
 
-<script type="text/x-handlebars" id="post/_edit">
-  <p>{{view Ember.TextField valueBinding='title' cols="30"}}</p>
-  <p>{{view Ember.TextArea valueBinding='intro' cols="50"}}</p>
-  <p>{{view Ember.TextArea valueBinding='extended' cols="80" rows="10"}}</p>
+<script type="text/x-handlebars" id="site/_edit">
+  <p>{{view Ember.TextField valueBinding='name' cols="30"}}</p>
+  <p>{{view Ember.TextArea valueBinding='img_url' cols="50"}}</p>
+  <p>{{view Ember.TextArea valueBinding='landing_url' cols="80" rows="10"}}</p>
 </script>

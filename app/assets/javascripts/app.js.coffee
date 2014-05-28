@@ -14,21 +14,21 @@ App.Store = DS.Store.extend(
   adapter: "DS.RESTAdapter" # "DS.FixtureAdapter"
 )
 
-App.Post = DS.Model.extend(
-  title: DS.attr("string")
+App.Site = DS.Model.extend(
+  name: DS.attr("string")
   author: DS.attr("string")
-  intro: DS.attr("string")
-  extended: DS.attr("string")
+  img_url: DS.attr("string")
+  landing_url: DS.attr("string")
   publishedAt: DS.attr("date")
 )
 
-App.PostsRoute = Ember.Route.extend(
+App.SitesRoute = Ember.Route.extend(
   model: ->
-    App.Post.find()
+    App.Site.find()
 )
 
 # See Discussion at http://stackoverflow.com/questions/14705124/creating-a-record-with-ember-js-ember-data-rails-and-handling-list-of-record
-App.PostsController = Ember.ArrayController.extend(
+App.SitesController = Ember.ArrayController.extend(
   sortProperties: [ "id" ]
   sortAscending: false
   filteredContent: (->
@@ -38,37 +38,37 @@ App.PostsController = Ember.ArrayController.extend(
   ).property("arrangedContent.@each")
 )
 
-App.PostsNewRoute = Ember.Route.extend(
+App.SitesNewRoute = Ember.Route.extend(
   model: ->
-    App.Post.createRecord(publishedAt: new Date(), author: "current user")
+    App.Site.createRecord(publishedAt: new Date(), author: "current user")
 )
 
-App.PostsNewController = Ember.ObjectController.extend(
+App.SitesNewController = Ember.ObjectController.extend(
   save: ->
     @get('store').commit()
 
   cancel: ->
     @get('content').deleteRecord()
     @get('store').transaction().rollback()
-    @transitionToRoute('posts')
+    @transitionToRoute('sites')
 
   transitionAfterSave: ( ->
     # when creating new records, it's necessary to wait for the record to be assigned
     # an id before we can transition to its route (which depends on its id)
-    @transitionToRoute('post', @get('content')) if @get('content.id')
+    @transitionToRoute('site', @get('content')) if @get('content.id')
   ).observes('content.id')
 )
 
-App.PostController = Ember.ObjectController.extend(
+App.SiteController = Ember.ObjectController.extend(
   isEditing: false
   edit: ->
     @set "isEditing", true
 
   delete: ->
-    if (window.confirm("Are you sure you want to delete this post?"))
+    if (window.confirm("Are you sure you want to delete this site?"))
       @get('content').deleteRecord()
       @get('store').commit()
-      @transitionToRoute('posts')
+      @transitionToRoute('sites')
 
   doneEditing: ->
     @set "isEditing", false
@@ -76,7 +76,7 @@ App.PostController = Ember.ObjectController.extend(
 
 )
 App.IndexRoute = Ember.Route.extend(redirect: ->
-  @transitionTo "posts"
+  @transitionTo "sites"
 )
 Ember.Handlebars.registerBoundHelper "date", (date) ->
   moment(date).fromNow()
@@ -88,7 +88,7 @@ Ember.Handlebars.registerBoundHelper "markdown", (input) ->
 
 App.Router.map ->
   @resource "about"
-  @resource "posts", ->
-    @resource "post",
-      path: ":post_id"
+  @resource "sites", ->
+    @resource "site",
+      path: ":site_id"
     @route "new"
