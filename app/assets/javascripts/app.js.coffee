@@ -27,6 +27,9 @@ App.SitesRoute = Ember.Route.extend(
     App.Site.find()
 )
 
+App.SitesViewRoute = App.SitesRoute.extend(
+)
+
 # See Discussion at http://stackoverflow.com/questions/14705124/creating-a-record-with-ember-js-ember-data-rails-and-handling-list-of-record
 App.SitesController = Ember.ArrayController.extend(
   sortProperties: [ "id" ]
@@ -36,6 +39,9 @@ App.SitesController = Ember.ArrayController.extend(
     content.filter (item, index) ->
       not (item.get("isNew"))
   ).property("arrangedContent.@each")
+)
+
+App.SitesViewController = App.SitesController.extend(
 )
 
 App.SitesNewRoute = Ember.Route.extend(
@@ -58,7 +64,6 @@ App.SitesNewController = Ember.ObjectController.extend(
     @transitionToRoute('site', @get('content')) if @get('content.id')
   ).observes('content.id')
 )
-
 App.SiteController = Ember.ObjectController.extend(
   isEditing: false
   edit: ->
@@ -74,6 +79,7 @@ App.SiteController = Ember.ObjectController.extend(
     @set "isEditing", false
     @get('store').commit()
 )
+
 App.IndexRoute = Ember.Route.extend(redirect: ->
   @transitionTo "sites"
 )
@@ -87,7 +93,7 @@ Ember.Handlebars.registerBoundHelper "markdown", (input) ->
 
 App.Router.map ->
   @resource "sites_view", ->
-    @resource "site",
+    @resource "site_view",
       path: ":site_id"
   @resource "about"
   @resource "sites", ->

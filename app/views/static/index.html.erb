@@ -1,4 +1,13 @@
-<script type="text/x-handlebars">
+<script type="text/x-handlebars" id="about">
+  <div class='about'>
+    <p>Jebbit Demo Site App</p>
+    <p>Justin Gordon wrote this: http://www.railsonmaui.com</p>
+    <p>Git Repository: </p>
+  </div>
+</script>
+
+<script type="text/x-handlebars" id="sites">
+<input type="filepicker" data-fp-apikey="A5dGYHyVgTuGpDlBUqUaSz" data-fp-mimetypes="*/*" data-fp-class="btn btn-primary" onchange="console.log(event.fpfile.url)" style="display:none">
   <div class="navbar">
     <div class="navbar-inner">
       <a class="brand" href="#">Demo</a>
@@ -10,18 +19,6 @@
 
     </div>
   </div>
-  {{outlet}}
-</script>
-
-<script type="text/x-handlebars" id="about">
-  <div class='about'>
-    <p>Jebbit Demo Site App</p>
-    <p>Justin Gordon wrote this: http://www.railsonmaui.com</p>
-    <p>Git Repository: </p>
-  </div>
-</script>
-
-<script type="text/x-handlebars" id="sites">
   <div class='container-fluid'>
     <div class='row-fluid'>
       <div class='span3'>
@@ -72,16 +69,15 @@
   {{/if}}
   {{partial 'site/view'}}
 </script>
-
+<script type="text/x-handlebars" id="site_view">
+  {{partial 'site/view'}}
+</script>
 <script type="text/x-handlebars" id="site/_view">
   <h1>{{name}}</h1>
-  <h4>by {{author}} <small class="muted">({{date createdAt}})</small></h4>
-  <hr>
   <div>
      <a {{bindAttr href="landing_url"}}><img {{bindAttr src="img_url"}}></a>
   </div>
 </script>
-<input type="filepicker" data-fp-apikey="A5dGYHyVgTuGpDlBUqUaSz" data-fp-mimetypes="*/*" data-fp-class="btn btn-primary" onchange="console.log(event.fpfile.url)" style="display:none">
 
 <script type="text/x-handlebars" id="site/_edit">
   <p>{{view Ember.TextField valueBinding='name' cols="30"}}</p>
