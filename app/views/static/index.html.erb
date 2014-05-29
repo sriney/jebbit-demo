@@ -5,6 +5,7 @@
       <ul class="nav">
         <li>{{#linkTo 'sites'}}Sites{{/linkTo}}</li>
         <li>{{#linkTo 'about'}}About{{/linkTo}}</li>
+        <li>{{#linkTo 'sites_view'}}Sites View{{/linkTo}}</li>
       </ul>
 
     </div>
@@ -76,16 +77,15 @@
   <h1>{{name}}</h1>
   <h4>by {{author}} <small class="muted">({{date createdAt}})</small></h4>
   <hr>
-  <div class="intro">
-    {{markdown img_url}}
-  </div>
-  <div class="below-the-fold">
-    {{markdown landing_url}}
+  <div>
+     <a {{bindAttr href="landing_url"}}><img {{bindAttr src="img_url"}}></a>
   </div>
 </script>
+<input type="filepicker" data-fp-apikey="A5dGYHyVgTuGpDlBUqUaSz" data-fp-mimetypes="*/*" data-fp-class="btn btn-primary" onchange="console.log(event.fpfile.url)" style="display:none">
 
 <script type="text/x-handlebars" id="site/_edit">
   <p>{{view Ember.TextField valueBinding='name' cols="30"}}</p>
-  <p>{{view Ember.TextArea valueBinding='img_url' cols="50"}}</p>
-  <p>{{view Ember.TextArea valueBinding='landing_url' cols="80" rows="10"}}</p>
+  <p>{{view Ember.TextField valueBinding='img_url' cols="30"}}</p>
+  <p>{{view Ember.TextField valueBinding='landing_url' cols="30"}}</p>
 </script>
+

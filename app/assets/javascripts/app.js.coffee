@@ -73,7 +73,6 @@ App.SiteController = Ember.ObjectController.extend(
   doneEditing: ->
     @set "isEditing", false
     @get('store').commit()
-
 )
 App.IndexRoute = Ember.Route.extend(redirect: ->
   @transitionTo "sites"
@@ -87,6 +86,9 @@ Ember.Handlebars.registerBoundHelper "markdown", (input) ->
   new Ember.Handlebars.SafeString(window.showdown.makeHtml(input)) if input # need to check if input is defined and not null
 
 App.Router.map ->
+  @resource "sites_view", ->
+    @resource "site",
+      path: ":site_id"
   @resource "about"
   @resource "sites", ->
     @resource "site",

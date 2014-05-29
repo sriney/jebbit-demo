@@ -11,6 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require showdown
+//= require filepicker 
 //= require moment
 //= require jquery
 //= require jquery_ujs
@@ -21,3 +22,20 @@
 //= require_self
 //= require app
 App = Ember.Application.create();
+
+filepicker.setKey('A5dGYHyVgTuGpDlBUqUaSz');
+
+$('#popFilePicker').click(function() {
+	filepicker.pick({
+    			mimetypes: ['image/*', 'text/plain'],
+    			container: 'window',
+    			services:['COMPUTER', 'FACEBOOK', 'GMAIL'],
+  		},
+  		function(InkBlob){
+    			console.log(JSON.stringify(InkBlob));
+  		},
+  		function(FPError){
+    			console.log(FPError.toString());
+  		}
+	);
+});

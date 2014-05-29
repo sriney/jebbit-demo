@@ -1,5 +1,6 @@
 App::Application.routes.draw do
   get "static/index"
+  get "display_site" => 'static#display'
   root :to => 'static#index'
   resources :sites, :defaults => {:format => "json"}
   # The priority is based upon order of creation: first created -> highest priority.
